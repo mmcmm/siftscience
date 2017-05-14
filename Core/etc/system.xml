@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+
+<!--
+Variables:
+    * JS Snippet Key
+    * REST API Key
+-->
+<config>
+    <tabs>
+        <siftscience_core_tab translate="label" module="siftscience_core">
+            <label>Sift Science</label>
+            <sort_order>100</sort_order>
+        </siftscience_core_tab>
+    </tabs>
+
+    <sections>
+        <siftscience_options translate="label" module="siftscience_core">
+            <label>Extension Configuration</label>
+            <tab>siftscience_core_tab</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>Sift Science Extension Configuration</label>
+
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+
+                    <fields>
+                        <enable>
+                            <label>Enable</label>
+                            <comment>Enable Sift Science Extension</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enable>
+
+                        <rest_api_key>
+                            <label>REST API Key</label>
+                            <comment>
+                                <![CDATA[Visit <a href="https://siftscience.com/console/api-keys" target="_blank">https://siftscience.com/console/api-keys</a> for your API Keys.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rest_api_key>
+
+                        <js_snippet_key>
+                            <label>Javascript Snippet Key</label>
+                            <comment><![CDATA[<b>Do not use REST Key!</b> This is visible on the frontend.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </js_snippet_key>
+
+                        <!--
+                        TODO(carl): enable comment creation support once it's documented.
+                        <comment_creation>
+                            <label>Automatic Comment Creation</label>
+                            <comment><![CDATA[Create a backend order comment with risk score. Good for 3rd-party filters]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </comment_creation>
+                        -->
+
+                    </fields>
+
+                </general>
+            </groups>
+        </siftscience_options>
+    </sections>
+
+</config>

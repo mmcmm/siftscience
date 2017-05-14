@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <modules>
+        <SiftScience_Core>
+            <version>1.0.0</version>
+        </SiftScience_Core>
+    </modules>
+
+    <stores>
+        <admin>
+            <design>
+                <theme>
+                    <template>siftadmin</template>
+                </theme>
+            </design>
+        </admin>
+    </stores>
+
+    <global>
+
+        <models>
+            <siftscience_core>
+                <class>SiftScience_Core_Model</class>
+            </siftscience_core>
+        </models>
+
+        <events>
+            <!--
+              There are two event hooks for the session collector. Since the checkout action
+              does not fire `controller_action_layout_load_before`, but all other customer
+              actions do, these should cover all use cases that require Sift Session information.
+            -->
+            <controller_action_layout_load_before>
+                <observers>
+                    <siftscience_core_session>
+                        <type>singleton</type>
+                        <class>siftscience_core/session</class>
+                        <method>front_init_hook</method>
+                    </siftscience_core_session>
+                </observers>
+            </controller_action_layout_load_before>
+            <controller_action_predispatch_checkout>
+                <observers>
+                    <siftscience_core_session>
+                        <type>singleton</type>
+                        <class>siftscience_core/session</class>
+                        <method>front_init_hook</method>
+                    </siftscience_core_session>
+                </observers>
+            </controller_action_predispatch_checkout>
+
+            <controller_action_postdispatch>
+                <observers>
+                    <siftscience_core_observer>
+                        <type>singleton</type>
+                        <class>siftscience_core/observer</class>
+                        <method>front_after_hook</method>
+                    </siftscience_core_observer>
+                </observers>
+            </controller_action_postdispatch>
+
+            <sales_model_service_quote_submit_before>
+                <observers>
+                    <siftscience_core_order>
+                        <type>singleton</type>
+                        <class>siftscience_core/order</class>
+                        <method>order_before_hook</method>
+                    </siftscience_core_order>
+                </observers>
+            </sales_model_service_quote_submit_before>
+
+            <sales_model_service_quote_submit_success>
+                <observers>
+                    <siftscience_core_observer>
+                        <type>singleton</type>
+                        <class>siftscience_core/observer</class>
+                        <method>order_success_hook</method>
+                    </siftscience_core_observer>
+                </observers>
+            </sales_model_service_quote_submit_success>
+
+            <sales_order_invoice_register>
+                <observers>
+                    <siftscience_core_observer>
+                        <type>singleton</type>
+                        <class>siftscience_core/observer</class>
+                        <method>order_paid_hook</method>
+                    </siftscience_core_observer>
+                </observers>
+            </sales_order_invoice_register>
+
+            <checkout_cart_add_product_complete>
+                <observers>
+                    <siftscience_core_observer>
+                        <type>singleton</type>
+                        <class>siftscience_core/observer</class>
+                        <method>add_product_hook</method>
+                    </siftscience_core_observer>
+                </observers>
+            </checkout_cart_add_product_complete>
+
+            <sales_order_payment_save_after>
+                <observers>
+                    <siftscience_core_payment>
+                        <type>singleton</type>
+                        <class>siftscience_core/payment</class>
+                        <method>payment_save_after_hook</method>
+                    </siftscience_core_payment>
+                </observers>
+            </sales_order_payment_save_after>
+        </events>
+
+        <blocks>
+            <siftscience_core>
+                <class>SiftScience_Core_Block</class>
+            </siftscience_core>
+        </blocks>
+
+        <helpers>
+            <siftscience_core>
+                <class>SiftScience_Core_Helper</class>
+            </siftscience_core>
+        </helpers>
+
+        <resources>
+            <siftscience_setup>
+                <setup>
+                    <module>SiftScience_Core</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </siftscience_setup>
+            <siftscience_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </siftscience_write>
+            <siftscience_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </siftscience_read>
+        </resources>
+
+    </global>
+
+    <frontend>
+        <routers>
+            <siftscience_core>
+                <use>standard</use>
+                <args>
+                    <module>SiftScience_Core</module>
+                    <frontName>siftscience</frontName>
+                </args>
+            </siftscience_core>
+        </routers>
+        <layout>
+            <updates>
+                <siftscience_core>
+                    <file>siftscience.xml</file>
+                </siftscience_core>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <siftscience_options>
+                                            <title>SiftScience Options</title>
+                                        </siftscience_options>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <phpunit>
+        <suite>
+            <modules>
+                <SiftScience_Core/>
+            </modules>
+        </suite>
+    </phpunit>
+
+</config>
